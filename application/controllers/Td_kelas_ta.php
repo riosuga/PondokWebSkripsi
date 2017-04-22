@@ -14,12 +14,12 @@ class Td_kelas_ta extends CI_Controller {
 		$this->load->view('v_td_kelas_ta');
 	}
 
-	public function trKelasTAList(){
-		$listNilai = $this->kelas->getListkelas();
+	public function tdKelasTAList(){
+		$listKelasTA = $this->kelas->getListKelasTA();
 		$data  = array();
 		$no = $_POST['start'];
 		//join guru nama kelas
-		foreach ($listNilai as $list) {
+		foreach ($listKelasTA as $list) {
 			$row = array();
 			$row[] = $list->nama_kelas;
 			$row[] = $list->nama;

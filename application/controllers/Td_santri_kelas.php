@@ -19,9 +19,9 @@ class Td_santri_kelas extends CI_Controller {
 		$listSantriKelas = $this->santri_kelas->getListSantriKelas();
 		$data  = array();
 		$no = $_POST['start'];
-		foreach ($listKelas as $list) {
+		foreach ($listSantriKelas as $list) {
 			$row = array();
-			$row[] = '<a href="'.base_url()."/'".$list->nama_kelas;
+			$row[] = /*'<a href="'.base_url()."/'". cikal bakal e*/$list->nama_kelas;
 			$row[] = $list->nama_kelas_ar;
 			$row[] = $list->kapasitas;
 			$row[] ='<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_person('."'".$list->id_santri_kelas."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>

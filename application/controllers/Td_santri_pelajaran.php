@@ -18,9 +18,10 @@ class Td_santri_pelajaran extends CI_Controller {
 		$listSantriPelajaran = $this->santri_p->getListSantriPelajaran();
 		$data  = array();
 		$no = $_POST['start'];
-		foreach ($listKelas as $list) {
+		//join
+		foreach ($listSantriPelajaran as $list) {
 			$row = array();
-			$row[] = '<a href="'.base_url()."/'".$list->nama_kelas;
+			$row[] = /*'<a href="'.base_url()."/'".*/$list->nama_kelas;
 			$row[] = $list->nama_kelas_ar;
 			$row[] = $list->kapasitas;
 			$row[] ='<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_person('."'".$list->id_santri_pelajaran."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
@@ -38,8 +39,9 @@ class Td_santri_pelajaran extends CI_Controller {
 
 	public function addTdSantriPelajaran(){
 		$data = array(
-				'id_ta' => $this->input->post('id_ta'),
-				'id_santri' => $this->input->post('id_santri'),
+				'id_pelajaran' => $this->input->post('id_pelajaran'),
+				'id_santri_kelas' => $this->input->post('id_santri_kelas'),
+				'id_guru' => $this->input->post('id_guru'),
 			);
 		$isSuccses = $this->santri_p->addTdSantriPelajaran($data);
 		if($isSuccses){
@@ -57,8 +59,9 @@ class Td_santri_pelajaran extends CI_Controller {
 
 	public function updateTdSantriPelajaran{
 		$data = array(
-				'id_ta' => $this->input->post('id_ta'),
-				'id_santri' => $this->input->post('id_santri'),
+				'id_pelajaran' => $this->input->post('id_pelajaran'),
+				'id_santri_kelas' => $this->input->post('id_santri_kelas'),
+				'id_guru' => $this->input->post('id_guru'),
 			);
 		$isSuccses = $this->santri_p->updateTdSantriPelajaran(array('id_santri_pelajaran' => $this->input->post('id_santri_pelajaran')), $data);
 		if($isSuccses){
