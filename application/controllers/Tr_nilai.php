@@ -38,9 +38,9 @@ class Tr_nilai extends CI_Controller {
 
 	public function addTrNilai(){
 		$data = array(
-				'uraian' => $this->input->post('uraian'),
-				'uraian_ar' => $this->input->post('uraian_ar'),
-				'bobot' => $this->input->post('bobot'),
+				'nilai' => $this->input->post('nilai'),
+				'id_ta' => $this->input->post('id_ta'),
+				'id_nilai' => $this->input->post('id_nilai'),
 			);
 		$isSuccses = $this->nilai->addTrNilai($data);
 		if($isSuccses){
@@ -51,15 +51,15 @@ class Tr_nilai extends CI_Controller {
 	}
 
 	public function priviewTrNilai($id){
-		$data = $this->nilai->getTrPlejaranById($id);
+		$data = $this->nilai->getTrNilaiById($id);
 		echo json_encode($data);
 	}
 
-	public function updateTrNilai{
+	public function updateTrNilai(){
 		$data = array(
-				'uraian' => $this->input->post('uraian'),
-				'uraian_ar' => $this->input->post('uraian_ar'),
-				'bobot' => $this->input->post('bobot'),
+				'nilai' => $this->input->post('nilai'),
+				'id_ta' => $this->input->post('id_ta'),
+				'id_nilai' => $this->input->post('id_nilai'),
 			);
 		$isSuccses = $this->nilai->updateTrNilai(array('id_nilai' => $this->input->post('id_nilai')), $data);
 		if($isSuccses){
@@ -69,7 +69,7 @@ class Tr_nilai extends CI_Controller {
 		}
 	}
 
-	public function deleteTrNilai{
+	public function deleteTrNilai(){
 		$isSuccses = $this->nilai->deleteTrNilai($id);
 		if($isSuccses){
 			echo json_encode(array("status" => TRUE));

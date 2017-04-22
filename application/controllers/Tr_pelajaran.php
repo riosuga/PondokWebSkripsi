@@ -45,7 +45,7 @@ class Tr_pelajaran extends CI_Controller {
 				'urian_en' => $this->input->post('urian_en'),
 			);
 		$isSuccses = $this->pelajaran->addTrPelajaran($data);
-		if($isSuccses){
+		if($isSuccses != null && $isSuccses != 0){
 			echo json_encode(array("status" => TRUE));
 		}else{
 			echo json_encode(array("status" => FALSE));
@@ -53,25 +53,25 @@ class Tr_pelajaran extends CI_Controller {
 	}
 
 	public function priviewTrPelajaran($id){
-		$data = $this->pelajaran->getTrPlejaranById($id);
+		$data = $this->pelajaran->getTrPelajaranById($id);
 		echo json_encode($data);
 	}
 
-	public function updateTrPelajaran{
+	public function updateTrPelajaran(){
 		$data = array(
 				'uraian' => $this->input->post('uraian'),
 				'uraian_ar' => $this->input->post('uraian_ar'),
 				'urian_en' => $this->input->post('urian_en'),
 			);
 		$isSuccses = $this->pelajaran->updateTrPelajaran(array('id_pelajaran' => $this->input->post('id_pelajaran')), $data);
-		if($isSuccses){
+		if($isSuccses != null && $isSuccses != 0)){
 			echo json_encode(array("status" => TRUE));
 		}else{
 			echo json_encode(array("status" => FALSE));
 		}
 	}
 
-	public function deleteTrPelajaran{
+	public function deleteTrPelajaran(){
 		$isSuccses = $this->pelajaran->deleteTrPelajaran($id);
 		if($isSuccses){
 			echo json_encode(array("status" => TRUE));

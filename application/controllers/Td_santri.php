@@ -19,13 +19,27 @@ class Tr_santri extends CI_Controller {
 		$listSantri = $this->santri->getListSantri();
 		$data  = array();
 		$no = $_POST['start'];
+		//horizontal table
 		foreach ($listSantri as $list) {
 			$row = array();
+			$row[] = $list->nis;
+			$row[] = $list->nisn;
 			$row[] = $list->nama;
 			$row[] = $list->nama_ar;
+			$row[] = $list->kelamin;
+			$row[] = $list->tempat_lahir;
+			$row[] = $list->tgl_lahir;
 			$row[] = $list->daerah;
-			$row[] ='<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_person('."'".$list->id_pelajaran."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
-					<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_person('."'".$list->id_pelajaran."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>'
+			$row[] = $list->daerah_ar;
+			$row[] = $list->tgl_awal;
+			$row[] = $list->tgl_akhir;
+			$row[] = $list->nama_ayah;
+			$row[] = $list->no_hp_ayah;
+			$row[] = $list->nama_ibu;
+			$row[] = $list->no_hp_ibu;
+			$row[] = $list->alamat;
+			$row[] ='<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_person('."'".$list->id_santri."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+					<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_person('."'".$list->id_santri."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>'
 			$data = $row[];
 		}
 		$output - array(
@@ -39,11 +53,21 @@ class Tr_santri extends CI_Controller {
 
 	public function addtdSantri(){
 		$data = array(
-				'uraian' => $this->input->post('uraian'),
-				'uraian_ar' => $this->input->post('uraian_ar'),
-				'urian_en' => $this->input->post('urian_en'),
+				'nis' => $this->input->post('nis'),
+				'nisn' => $this->input->post('nisn'),
+				'nama' => $this->input->post('nama'),
+				'nama_ar' => $this->input->post('nama_ar'),
+				'kelamin' => $this->input->post('kelamin'),
+				'tempat_lahir' => $this->input->post('tempat_lahir'),
+				'tgl_lahir' => $this->input->post('tgl_lahir'),
+				'tgl_awal' => $this->input->post('tgl_awal'),
+				'nama_ayah' => $this->input->post('nama_ayah'),
+				'no_hp_ayah' => $this->input->post('no_hp_ayah'),
+				'nama_ibu' => $this->input->post('nama_ibu'),
+				'no_hp_ibu' => $this->input->post('no_hp_ibu'),
+				'alamat' => $this->input->post('alamat'),
 			);
-		$isSuccses = $this->pelajaran->addtdSantri($data);
+		$isSuccses = $this->santri->addtdSantri($data);
 		if($isSuccses){
 			echo json_encode(array("status" => TRUE));
 		}else{
@@ -52,17 +76,27 @@ class Tr_santri extends CI_Controller {
 	}
 
 	public function priviewtdSantri($id){
-		$data = $this->pelajaran->getTrPlejaranById($id);
+		$data = $this->santri->getTrSantriById($id);
 		echo json_encode($data);
 	}
 
-	public function updatetdSantri{
+	public function updatetdSantri(){
 		$data = array(
-				'uraian' => $this->input->post('uraian'),
-				'uraian_ar' => $this->input->post('uraian_ar'),
-				'urian_en' => $this->input->post('urian_en'),
+				'nis' => $this->input->post('nis'),
+				'nisn' => $this->input->post('nisn'),
+				'nama' => $this->input->post('nama'),
+				'nama_ar' => $this->input->post('nama_ar'),
+				'kelamin' => $this->input->post('kelamin'),
+				'tempat_lahir' => $this->input->post('tempat_lahir'),
+				'tgl_lahir' => $this->input->post('tgl_lahir'),
+				'tgl_awal' => $this->input->post('tgl_awal'),
+				'nama_ayah' => $this->input->post('nama_ayah'),
+				'no_hp_ayah' => $this->input->post('no_hp_ayah'),
+				'nama_ibu' => $this->input->post('nama_ibu'),
+				'no_hp_ibu' => $this->input->post('no_hp_ibu'),
+				'alamat' => $this->input->post('alamat'),
 			);
-		$isSuccses = $this->pelajaran->updatetdSantri(array('id_pelajaran' => $this->input->post('id_pelajaran')), $data);
+		$isSuccses = $this->santri->updatetdSantri(array('id_santri' => $this->input->post('id_santri')), $data);
 		if($isSuccses){
 			echo json_encode(array("status" => TRUE));
 		}else{
@@ -70,8 +104,8 @@ class Tr_santri extends CI_Controller {
 		}
 	}
 
-	public function deletetdSantri{
-		$isSuccses = $this->pelajaran->deletetdSantri($id);
+	public function deletetdSantri(){
+		$isSuccses = $this->santri->deletetdSantri($id);
 		if($isSuccses){
 			echo json_encode(array("status" => TRUE));
 		}else{

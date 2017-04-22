@@ -15,34 +15,38 @@ class Tr_kkm extends CI_Controller {
 	}
 
 	public function trKKMList(){
-		$listNilai = $this->nilai->getListnilai();
+		$listNilai = $this->kkm->getListkkm();
 		$data  = array();
 		$no = $_POST['start'];
-		foreach ($listNilai as $list) {
+		//jangan lupa join kelas_ta, guru, pelajaran, tr_kelas
+		foreach ($listKKM as $list) {
 			$row = array();
+			$row[] = $list->tahun;
+			$row[] = $list->semester;
 			$row[] = $list->uraian;
-			$row[] = $list->uraian_ar;
+			$row[] = $list->nama_kelas;
+			$row[] = $list->nama;
 			$row[] = $list->bobot;
-			$row[] ='<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_person('."'".$list->id_nilai."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
-					<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_person('."'".$list->id_nilai."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>'
+			$row[] ='<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_person('."'".$list->id_kkm."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+					<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_person('."'".$list->id_kkm."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>'
 			$data = $row[];
 		}
 		$output - array(
 			"draw" => $_POST['draw'],
-			"recordsTotal" => $this->nilai->count_all(),
-			"recordsFiltered" => $this->nilai->count_filtered(),
+			"recordsTotal" => $this->kkm->count_all(),
+			"recordsFiltered" => $this->kkm->count_filtered(),
 			"data" => $data,
 			);
 		echo json_encode($output);
 	}
 
-	public function addTrKKM(){
+	public function addtrKKM(){
 		$data = array(
 				'uraian' => $this->input->post('uraian'),
 				'uraian_ar' => $this->input->post('uraian_ar'),
 				'bobot' => $this->input->post('bobot'),
 			);
-		$isSuccses = $this->nilai->addTrKKM($data);
+		$isSuccses = $this->kkm->addtrKKM($data);
 		if($isSuccses){
 			echo json_encode(array("status" => TRUE));
 		}else{
@@ -50,18 +54,18 @@ class Tr_kkm extends CI_Controller {
 		}
 	}
 
-	public function priviewTrKKM($id){
-		$data = $this->nilai->getTrPlejaranById($id);
+	public function priviewtrKKM($id){
+		$data = $this->kkm->getTrKKMById($id);
 		echo json_encode($data);
 	}
 
-	public function updateTrKKM{
+	public function updatetrKKM(){
 		$data = array(
 				'uraian' => $this->input->post('uraian'),
 				'uraian_ar' => $this->input->post('uraian_ar'),
 				'bobot' => $this->input->post('bobot'),
 			);
-		$isSuccses = $this->nilai->updateTrKKM(array('id_nilai' => $this->input->post('id_nilai')), $data);
+		$isSuccses = $this->kkm->updatetrKKM(array('id_kkm' => $this->input->post('id_kkm')), $data);
 		if($isSuccses){
 			echo json_encode(array("status" => TRUE));
 		}else{
@@ -69,8 +73,8 @@ class Tr_kkm extends CI_Controller {
 		}
 	}
 
-	public function deleteTrKKM{
-		$isSuccses = $this->nilai->deleteTrKKM($id);
+	public function deletetrKKM(){
+		$isSuccses = $this->kkm->deletetrKKM($id);
 		if($isSuccses){
 			echo json_encode(array("status" => TRUE));
 		}else{

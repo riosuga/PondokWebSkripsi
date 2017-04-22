@@ -3,10 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Mtr_pelajaran extends CI_Model {
 
-	var $table = 'tr_pelajaran';
-	var $column_order = array('uraian','uraian_en','uraian_ar',null); //set column field database for datatable orderable
-	var $column_search = array('uraian','uraian_en','uraian_ar'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('id_pelajaran' => 'desc'); // default order 
+	var $table = 'tr_nilai';
+	var $column_order = array('uraian','uraian_ar','bobot',null); //set column field database for datatable orderable
+	var $column_search = array('uraian','uraian_ar','bobot'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	var $order = array('id_nilai' => 'desc'); // default order 
 
 
 	public function __construct()
@@ -76,30 +76,30 @@ class Mtr_pelajaran extends CI_Model {
 		return $this->db->count_all_results();
 	}
 
-	public function getTrPelajaranById($id)
+	public function getTrNilaiById($id)
 	{
 		$this->db->from($this->table);
-		$this->db->where('id_pelajaran',$id);
+		$this->db->where('id_nilai',$id);
 		$query = $this->db->get();
 
 		return $query->row();
 	}
 
-	public function addTrPelajaran($data)
+	public function addTrNilai($data)
 	{
 		$this->db->insert($this->table, $data);
 		return $this->db->insert_id();
 	}
 
-	public function updateTrPelajaran($where, $data)
+	public function updateTrNilai($where, $data)
 	{
 		$this->db->update($this->table, $data, $where);
 		return $this->db->affected_rows();
 	}
 
-	public function deleteTrPelajaran($id)
+	public function deleteTrNilai($id)
 	{
-		$this->db->where('id_pelajaran', $id);
+		$this->db->where('id_nilai', $id);
 		$this->db->delete($this->table);
 	}
 
