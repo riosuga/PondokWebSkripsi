@@ -3,10 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Mtd_guru extends CI_Model {
 
-	var $table = 'tr_nilai';
+	var $table = 'tr_Guru';
 	var $column_order = array('uraian','uraian_ar','bobot',null); //set column field database for datatable orderable
 	var $column_search = array('uraian','uraian_ar','bobot'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('id_nilai' => 'desc'); // default order 
+	var $order = array('id_Guru' => 'desc'); // default order 
 
 
 	public function __construct()
@@ -54,7 +54,7 @@ class Mtd_guru extends CI_Model {
 		}
 	}
 	
-	function getListpelajaran()
+	function getListGuru()
 	{
 		$this->_get_datatables_query();
 		if($_POST['length'] != -1)
@@ -76,30 +76,30 @@ class Mtd_guru extends CI_Model {
 		return $this->db->count_all_results();
 	}
 
-	public function getTrNilaiById($id)
+	public function getTrGuruById($id)
 	{
 		$this->db->from($this->table);
-		$this->db->where('id_nilai',$id);
+		$this->db->where('id_Guru',$id);
 		$query = $this->db->get();
 
 		return $query->row();
 	}
 
-	public function addTrNilai($data)
+	public function addTrGuru($data)
 	{
 		$this->db->insert($this->table, $data);
 		return $this->db->insert_id();
 	}
 
-	public function updateTrNilai($where, $data)
+	public function updateTrGuru($where, $data)
 	{
 		$this->db->update($this->table, $data, $where);
 		return $this->db->affected_rows();
 	}
 
-	public function deleteTrNilai($id)
+	public function deleteTrGuru($id)
 	{
-		$this->db->where('id_nilai', $id);
+		$this->db->where('id_Guru', $id);
 		$this->db->delete($this->table);
 	}
 
