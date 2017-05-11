@@ -9,12 +9,25 @@ class Td_kelas_ta extends CI_Controller {
 		$this->load->model('Mtd_kelas_ta','kelas_ta');
 	}
 
-	public function index()
+	public function index($id)
 	{
-		$this->load->view('v_td_kelas_ta');
+		$data = array(
+			"body" => $this->load->view('table/table_td_kelas_ta', null,TRUE),
+			"modal" => $this->load->view('modal/modal_td_kelas_ta', null,TRUE),
+			);
+		$data['script_var_location'] = 
+		'<script type="text/javascript">
+		var locList ="'.site_url('td_kelas_ta/tdKelasTAList/'.).'";
+		var locPrev ="'.site_url('td_kelas_ta/priviewtdKelasTA').'";
+		var locAdd ="'.site_url('td_kelas_ta/addtdKelasTA').'";
+		var locUpd ="'.site_url('td_kelas_ta/updatetdKelasTA').'";
+		var locDel ="'.site_url('td_kelas_ta/deletetdKelasTA').'";
+		</script>';
+		$data['script_js'] = '<script src="'.base_url('assets/customJs/td_kelas_ta.js').'"></script>';
+		$this->load->view('main/main_view', $data);
 	}
 
-	public function tdKelasTAList(){
+	public function tdKelasTAList($id_kelas){
 		$listKelasTA = $this->kelas->getListKelasTA();
 		$data  = array();
 		$no = $_POST['start'];

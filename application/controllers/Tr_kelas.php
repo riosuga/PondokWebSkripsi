@@ -38,8 +38,12 @@ class Tr_kelas extends CI_Controller {
 			$row[] = $list->nama_kelas;
 			$row[] = $list->nama_kelas_ar;
 			$row[] = $list->kapasitas;
-			$row[] ='<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_person('."'".$list->id_kelas."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
-					<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_person('."'".$list->id_kelas."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+			$row[] ='
+			<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" 
+			onclick="edit_person('."'".$list->id_kelas."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+			<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" 
+			onclick="delete_person('."'".$list->id_kelas."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>
+			<a href="'.base_url('td_kelas_ta/'.$list->id_kelas).'" class="btn btn-info" role="button"><i class="glyphicon glyphicon-info-sign"></i> Detail</a>';
 			$data[] = $row;
 		}
 		$output = array(

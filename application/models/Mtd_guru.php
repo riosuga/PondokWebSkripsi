@@ -3,10 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Mtd_guru extends CI_Model {
 
-	var $table = 'tr_Guru';
-	var $column_order = array('uraian','uraian_ar','bobot',null); //set column field database for datatable orderable
-	var $column_search = array('uraian','uraian_ar','bobot'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('id_Guru' => 'desc'); // default order 
+	var $table = 'td_Guru';
+	var $column_order = array('nip','nama','nama_ar','uraian','kelamin','tempat_lahir','tgl_lahir','alamat','no_hp','email',null); //set column field database for datatable orderable
+	var $column_search = array('nip','nama','nama_ar','uraian','kelamin','tempat_lahir','tgl_lahir','alamat','no_hp','email'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	var $order = array('td_guru.id_guru' => 'desc'); // default order 
 
 
 	public function __construct()
@@ -16,10 +16,10 @@ class Mtd_guru extends CI_Model {
 	}
 
 	private function _get_datatables_query()
-	{
-		
+	{	
 		$this->db->from($this->table);
-
+		$this->db->join('td_guru_kompentensi', 'td_guru.id_guru = td_guru_kompentensi.id_guru', 'left');
+		$this->db->join('tr_pelajaran', 'td_guru_kompentensi.id_pelajaran = tr_pelajaran.id_pelajaran', 'left');
 		$i = 0;
 	
 		foreach ($this->column_search as $item) // loop column 
@@ -76,33 +76,39 @@ class Mtd_guru extends CI_Model {
 		return $this->db->count_all_results();
 	}
 
-	public function getTrGuruById($id)
+	public function getTdGuruById($id)
 	{
 		$this->db->from($this->table);
-		$this->db->where('id_Guru',$id);
+		$this->db->join('td_guru_kompentensi', 'td_guru.id_guru = td_guru_kompentensi.id_guru', 'left');
+		$this->db->join('tr_pelajaran', 'td_guru_kompentensi.id_pelajaran = tr_pelajaran.id_pelajaran', 'left');
+		$this->db->where('td_guru.id_guru',$id);
 		$query = $this->db->get();
-
 		return $query->row();
 	}
 
-	public function addTrGuru($data)
+	public function addTdGuru($data)
 	{
 		$this->db->insert($this->table, $data);
 		return $this->db->insert_id();
 	}
 
-	public function updateTrGuru($where, $data)
+	public function updateTdGuru($where, $data)
 	{
 		$this->db->update($this->table, $data, $where);
 		return $this->db->affected_rows();
 	}
 
-	public function deleteTrGuru($id)
+	public function deleteTdGuru($id)
 	{
 		$this->db->where('id_Guru', $id);
 		$this->db->delete($this->table);
 	}
 
+	public function getListPelajaranOnTdGuru(){
+		$this->db->from('tr_pelajaran');
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 }
 
 /* End of file Mtd_guru.php */

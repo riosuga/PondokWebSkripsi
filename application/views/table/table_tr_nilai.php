@@ -1,5 +1,5 @@
     <div class="container">  
-      <h3>Data Santri</h3>
+      <h3>Data Referensi Nilai</h3>
         <br />
         <button class="btn btn-success" onclick="add_person()"><i class="glyphicon glyphicon-plus"></i> Tambah Referensi Nilai</button>
         <button class="btn btn-default" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
