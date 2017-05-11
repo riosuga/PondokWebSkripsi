@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Mtd_kelas extends CI_Model {
+class Mtr_kelas extends CI_Model {
 
 	var $table = 'tr_kelas';
 	var $column_order = array('nama_kelas','nama_kelas_ar','kapasitas',null); //set column field database for datatable orderable

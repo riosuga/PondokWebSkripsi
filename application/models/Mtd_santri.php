@@ -3,8 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Mtd_santri extends CI_Model {
 
-	class Mtd_kelas extends CI_Model {
-
 	var $table = 'td_santri';
 	var $column_order = array('nis','nisn','nama','kelamin','nama_ar','tempat_lahir','tgl_lahir','tgl_awal','daerah','daerah_ar','tgl_akhir','nama_ayah','no_hp_ayah','nama_ibu','alamat','no_hp_ibu',null); //set column field database for datatable orderable
 	var $column_search = array('nis','nisn','nama','kelamin','nama_ar','tempat_lahir','tgl_lahir','tgl_awal','daerah','daerah_ar','tgl_akhir','nama_ayah','no_hp_ayah','nama_ibu','alamat','no_hp_ibu'); //set column field database for datatable searchable just firstname , lastname , address are searchable
@@ -81,7 +79,7 @@ class Mtd_santri extends CI_Model {
 	public function getTdSantriById($id)
 	{
 		$this->db->from($this->table);
-		$this->db->where('id_Kelas',$id);
+		$this->db->where('id_santri',$id);
 		$query = $this->db->get();
 
 		return $query->row();
@@ -101,11 +99,10 @@ class Mtd_santri extends CI_Model {
 
 	public function deleteTdSantri($id)
 	{
-		$this->db->where('id_Kelas', $id);
+		$this->db->where('id_santri', $id);
 		$this->db->delete($this->table);
 	}	
 	
-
 }
 
 /* End of file Mtd_santri.php */

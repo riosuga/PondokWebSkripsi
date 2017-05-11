@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Mtr_pelajaran extends CI_Model {
+class Mtr_nilai extends CI_Model {
 
 	var $table = 'tr_nilai';
 	var $column_order = array('uraian','uraian_ar','bobot',null); //set column field database for datatable orderable
@@ -54,7 +54,7 @@ class Mtr_pelajaran extends CI_Model {
 		}
 	}
 	
-	function getListpelajaran()
+	function getListNilai()
 	{
 		$this->_get_datatables_query();
 		if($_POST['length'] != -1)
@@ -105,5 +105,5 @@ class Mtr_pelajaran extends CI_Model {
 
 }
 
-/* End of file Mtr_pelajaran.php */
-/* Location: ./application/models/Mtr_pelajaran.php */
+/* End of file Mtr_Nilai.php */
+/* Location: ./application/models/Mtr_Nilai.php */
