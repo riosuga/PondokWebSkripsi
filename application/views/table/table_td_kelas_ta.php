@@ -1,7 +1,9 @@
     <div class="container">  
-      <h3>Data Referensi KKM</h3>
+      <h3>Data Detail Kelas - <?php foreach ($data_kelas as $kelas) {
+        echo $kelas['nama_kelas'].'dengan kapasitas : '.$kelas['kapasitas'];
+      } ?></h3>
         <br />
-        <button class="btn btn-success" onclick="add_person()"><i class="glyphicon glyphicon-plus"></i> Tambah Referensi KKM</button>
+        <button class="btn btn-success" onclick="add_person()"><i class="glyphicon glyphicon-plus"></i> Tambah Kelas Tahun Ajaran</button>
         <button class="btn btn-default" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
         <br />
         <br />
@@ -9,9 +11,10 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Nilai</th>
-                    <th>Pelajaran</th>
-                    <th>Keterangan</th>
+                    <th>Nama Kelas</th>
+                    <th>Nama Guru</th>
+                    <th>Semester</th>
+                    <th>Tahun</th>
                     <th style="width:125px;">Action</th>
                 </tr>
             </thead>
@@ -21,9 +24,10 @@
             <tfoot>
            <tr>
                <th>No</th>
-               <th>Nilai</th>
-               <th>Pelajaran</th>
-               <th>Keterangan</th>
+               <th>Nama Kelas</th>
+               <th>Nama Guru</th>
+               <th>Semester</th>
+               <th>Tahun</th>
                <th>Action</th>
              </tr>
             </tfoot>

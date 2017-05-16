@@ -7,47 +7,81 @@ class Td_santri_kelas extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Mtd_santri_kelas','santri_kelas');
+		$this->load->library('session');
 	}
 
 	public function index()
 	{
-		$this->load->view('v_td_santri_kelas');
+		//rusak
+		echo 'rusak';
+	}
+
+	public function mainTdSantriKelas($id_ta){
+		$id_ta = $this->uri->segment(3);
+		$this->santri_kelas->setIdTa($id_ta);
+		
+		$newData = array('id_ta'=> $id_ta);
+		$this->session->set_userdata($newData);
+
+		$data2['data_kelas'] = $this->santri_kelas->getKelasTaOnTdSantriKelas();
+		$data2['data_santri'] = $this->santri_kelas->getSantriHasNotClass($id_ta);
+		$data2['slug'] = $id_ta;
+		$data = array(
+			"body" => $this->load->view('table/table_td_santri_kelas', $data2,TRUE),
+			"modal" => $this->load->view('modal/modal_td_santri_kelas', $data2,TRUE),
+			);
+		$data['script_var_location'] = 
+		'<script type="text/javascript">
+		var locList ="'.site_url('td_santri_kelas/tdSantriKelasList').'";
+		var locPrev ="'.site_url('td_santri_kelas/priviewtdSantriKelas').'";
+		var locAdd ="'.site_url('td_santri_kelas/addtdSantriKelas').'";
+		var locUpd ="'.site_url('td_santri_kelas/updatetdSantriKelas').'";
+		var locDel ="'.site_url('td_santri_kelas/deletetdSantriKelas').'";
+		</script>';
+		$data['script_js'] = '<script src="'.base_url('assets/customJs/td_santri_kelas.js').'"></script>';
+		$this->load->view('main/main_view', $data);
 	}
 
 	public function tdSantriKelasList(){
 		//pokok isine murid
+
+		$id_ta = $this->session->userdata('id_ta');
+		$this->santri_kelas->setIdTa($id_ta);
+		
 		$listSantriKelas = $this->santri_kelas->getListSantriKelas();
 		$data  = array();
 		$no = $_POST['start'];
 		foreach ($listSantriKelas as $list) {
+			$no++;
 			$row = array();
-			$row[] = /*'<a href="'.base_url()."/'". cikal bakal e*/$list->nama_kelas;
-			$row[] = $list->nama_kelas_ar;
-			$row[] = $list->kapasitas;
-			$row[] ='<a class="btn btn-sm btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_person('."'".$list->id_santri_kelas."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
-					<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_person('."'".$list->id_santri_kelas."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>'
-			$data = $row[];
+			$row[] = $no;
+			$row[] = $list->nis;
+			$row[] = $list->nama;
+			$row[] ='<a class="btn btn-sm btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_person('."'".$list->id_santri_kelas."'".')"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+			$data[] = $row;
 		}
-		$output - array(
+		$output = array(
 			"draw" => $_POST['draw'],
 			"recordsTotal" => $this->santri_kelas->count_all(),
 			"recordsFiltered" => $this->santri_kelas->count_filtered(),
 			"data" => $data,
 			);
 		echo json_encode($output);
+		$this->session->userdata('id_ta');
 	}
 
 	public function addTdSantriKelas(){
-		$data = array(
-				'id_ta' => $this->input->post('id_ta'),
-				'id_santri' => $this->input->post('id_santri'),
-			);
-		$isSuccses = $this->santri_kelas->addTdSantriKelas($data);
-		if($isSuccses){
-			echo json_encode(array("status" => TRUE));
-		}else{
-			echo json_encode(array("status" => FALSE));
+		$data = $this->input->post('myField');
+		$id = $this->input->post('id_ta');
+		$tampung = explode(',',$data);
+		foreach ($tampung as $masuk) {
+			$data = array(
+				'nis' =>  $masuk,
+				'id_kelas' => $id
+				);
+			$this->santri_kelas->addTdSantriKelas($data);
 		}
+		 echo json_encode(array("status" => TRUE));
 	}
 
 	public function priviewTdSantriKelas($id){
@@ -56,26 +90,19 @@ class Td_santri_kelas extends CI_Controller {
 		echo json_encode($data);
 	}
 
-	public function updateTdSantriKelas{
+	public function updateTdSantriKelas(){
 		$data = array(
 				'id_ta' => $this->input->post('id_ta'),
 				'id_santri' => $this->input->post('id_santri'),
 			);
 		$isSuccses = $this->santri_kelas->updateTdSantriKelas(array('id_santri_kelas' => $this->input->post('id_santri_kelas')), $data);
-		if($isSuccses){
-			echo json_encode(array("status" => TRUE));
-		}else{
-			echo json_encode(array("status" => FALSE));
-		}
+		echo json_encode(array("status" => TRUE));
+
 	}
 
-	public function deleteTdSantriKelas{
+	public function deleteTdSantriKelas($id){
 		$isSuccses = $this->santri_kelas->deleteTdSantriKelas($id);
-		if($isSuccses){
-			echo json_encode(array("status" => TRUE));
-		}else{
-			echo json_encode(array("status" => TRUE));
-		}
+		echo json_encode(array("status" => TRUE));
 		
 	}
 

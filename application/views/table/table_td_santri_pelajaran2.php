@@ -1,7 +1,7 @@
     <div class="container">  
-      <h3>Data Referensi KKM</h3>
+      <h3>Daftar Santri</h3>
         <br />
-        <button class="btn btn-success" onclick="add_person()"><i class="glyphicon glyphicon-plus"></i> Tambah Referensi KKM</button>
+        <!-- <button class="btn btn-success" onclick="add_person()"><i class="glyphicon glyphicon-plus"></i> Tambah Kelas Tahun Ajaran</button> -->
         <button class="btn btn-default" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
         <br />
         <br />
@@ -9,9 +9,8 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Nilai</th>
-                    <th>Pelajaran</th>
-                    <th>Keterangan</th>
+                    <th>Nis</th>
+                    <th>Nama Santri</th>
                     <th style="width:125px;">Action</th>
                 </tr>
             </thead>
@@ -21,9 +20,8 @@
             <tfoot>
            <tr>
                <th>No</th>
-               <th>Nilai</th>
-               <th>Pelajaran</th>
-               <th>Keterangan</th>
+               <th>Nis</th>
+               <th>Nama Santri</th>
                <th>Action</th>
              </tr>
             </tfoot>

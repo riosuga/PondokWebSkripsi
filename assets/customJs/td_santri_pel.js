@@ -69,13 +69,20 @@ function edit_person(id)
         dataType: "JSON",
         success: function(data)
         {
-            $('[name="id"]').val(data.id_ta);
-            $('[name="nama_kelas"]').val(data.nama_kelas);
-            $('[name="semester"]').val(data.semester);
-            $('[name="nama"]').val(data.nama);
-            $('[name="tahun"]').val(data.tahun);
+            $('[name="id"]').val(data.id_santri_pelajaran);
+            $('[name="id_kelas_nilai"]').val(data.id_santri_nilai);
+            $('[name="pelajaran"]').val(data.id_pelajaran);
+            $('[name="guru"]').val(data.id_guru);
+            $('[name="id_santr"]').val(data.nama);
+            $('[name="jns_kegiatan"]').val(data.id_nilai);
+            $('[name="nomor"]').val(data.nomor);
+            $('[name="nilai_awal"]').val(data.nilai_awal);
+            $('[name="nilai_remed"]').val(data.nilai_remed);
+            $('[name="nilai_akhir"]').val(data.nilai_akhir);
+            $('[name="tgl_ujian"]').datepicker('update',data.tgl_ujian);
+            $('[name="tgl_remed"]').datepicker('update',data.tgl_remed);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
-            $('.modal-title').text('Edit Person'); // Set title to Bootstrap modal title
+            $('.modal-title').text('Edit'); // Set title to Bootstrap modal title
         },
         error: function (jqXHR, textStatus, errorThrown)
         {

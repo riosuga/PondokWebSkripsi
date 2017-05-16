@@ -6,7 +6,7 @@ class Mtd_santri_kelas extends CI_Model {
 	var $column_order = array('nama_kelas','nama_kelas_ar','kapasitas',null); //set column field database for datatable orderable
 	var $column_search = array('nama_kelas','nama_kelas_ar','kapasitas'); //set column field database for datatable searchable just firstname , lastname , address are searchable
 	var $order = array('id_kelas' => 'desc'); // default order 
-
+	var $id_ta;
 
 	public function __construct()
 	{
@@ -14,14 +14,48 @@ class Mtd_santri_kelas extends CI_Model {
 		$this->load->database();
 	}
 
+	public function setIdTa($id){
+		$this->id_ta = $id;
+	}
+
+	public function getIdTA(){
+		return $this->id_ta;
+	}
+
+	public function getKelasTaOnTdSantriKelas(){
+		/*
+		SELECT *,td_guru.nama as nama_guru FROM td_santri_kelas 
+		join td_kelas_ta on td_santri_kelas.id_ta = td_kelas_ta.id_ta 
+		join td_santri on td_santri_kelas.id_santri = td_santri.id_santri 
+		join td_guru on td_kelas_ta.id_guru = td_guru.id_guru 
+		join tr_kelas on td_kelas_ta.id_kelas = tr_kelas.id_kelas
+		*/
+		$this->db->select('*, td_guru.nama as nama_guru');
+		$this->db->from($this->table);
+		$this->db->join('td_santri', 'td_santri_kelas.id_santri = td_santri.id_santri', 'left');
+		$this->db->join('td_kelas_ta', 'td_santri_kelas.id_ta = td_kelas_ta.id_ta', 'left');
+		$this->db->join('td_guru', 'td_kelas_ta.id_guru = td_guru.id_guru', 'left');
+		$this->db->join('tr_kelas', 'td_kelas_ta.id_kelas = tr_kelas.id_kelas', 'left');
+		$query =  $this->db->get();
+		return $query->result_array();
+	}
+
+	public function getSantriHasNotClass($id_ta){
+		$querying = "select * from td_santri where not exists(select id_santri from td_santri_kelas 
+		join td_kelas_ta on td_santri_kelas.id_ta = td_kelas_ta.id_ta
+		where td_santri_kelas.id_santri = td_santri.id_santri and td_santri_kelas.id_ta ='".$id_ta."')";
+		$query  = $this->db->query($querying);
+		return $query->result_array();
+	}
+
+
 	private function _get_datatables_query()
 	{
 		
 		$this->db->from($this->table);
-		$this->db->join('td_santri', 't.id_santri = td_santri.id_santri', 'left');
-		$this->db->join('td_kelas_ta', 'table.column = td_kelas_ta.id_ta', 'left');
-		$this->db->join('tr_kelas', 'td_kelas_ta.id_kelas = tr_kelas.id_kelas', 'left');
-		$this->db->join('td_guru', 'td_kelas_ta.id_guru = td_guru.id_guru', 'left');
+		$this->db->join('td_santri', 'td_santri_kelas.id_santri = td_santri.id_santri', 'left');
+		$this->db->join('td_kelas_ta', 'td_santri_kelas.id_ta = td_kelas_ta.id_ta', 'left');
+		$this->db->where('td_kelas_ta.id_ta', $this->id_ta);
 
 		$i = 0;
 	

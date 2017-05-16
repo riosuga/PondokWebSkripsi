@@ -1,38 +1,31 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Mtd_kelas_ta extends CI_Model {
-	var $table = 'td_kelas_ta';
-	var $column_order = array('tahun','semester','nama_kelas','nama',null); //set column field database for datatable orderable
-	var $column_search = array('tahun','semester','nama_kelas','nama'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('id_ta' => 'desc'); // default order 
-	public  $id_kelas;
+class Mtr_kkm extends CI_Model {
+
+	var $table = 'tr_kkm';
+	var $column_order = array('nama','nilai','semester','nama_kelas','tahun','uraian','semester',null); //set column field database for datatable orderable
+	var $column_search = array('nama','nilai','semester','nama_kelas','tahun','uraian','semester'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	var $order = array('id_kkm' => 'desc'); // default order 
 
 	public function __construct()
-	{
-		parent::__construct();
-		$this->load->database();
-	}
+		{
+			parent::__construct();
+			$this->load->database();
+		}	
 
-	public function setIdKelas($id){
-		$this->id_kelas = $id;
-	}
-
-	public function getIdKelas(){
-		return $this->id_kelas;
-	}
-
-	public function getKelasOnTdKelasTa(){
+	public function getUraianTahunAjaranOnKKM(){
 		$this->db->select('*');
-		$this->db->from('tr_kelas');
-		$this->db->where('id_kelas', $this->id_kelas);
+		$this->db->from('td_kelas_ta');
+		$this->db->join('td_guru', 'td_kelas_ta.id_guru = td_guru.id_guru', 'left');
+		$this->db->join('tr_kelas', 'td_kelas_ta.id_kelas = tr_kelas.id_kelas', 'left');
 		$query = $this->db->get();
 		return $query->result_array();
 	}
 
-	public function getGuruOnTdKelasTA(){
+	public function getPeljaranOnKKM(){
 		$this->db->select('*');
-		$this->db->from('td_guru');
+		$this->db->from('tr_pelajaran');
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -40,9 +33,10 @@ class Mtd_kelas_ta extends CI_Model {
 	public function _get_datatables_query()
 	{
 		$this->db->from($this->table);
-		$this->db->join('tr_kelas', 'td_kelas_ta.id_kelas = tr_kelas.id_kelas');
-		$this->db->join('td_guru', 'td_kelas_ta.id_guru = td_guru.id_guru');
-		$this->db->where('td_kelas_ta.id_kelas', $this->id_kelas);
+		$this->db->join('td_kelas_ta', 'tr_kkm.id_ta = td_kelas_ta.id_ta');
+		$this->db->join('td_guru', 'td_kelas_ta.id_guru = td_guru.id_guru', 'left');
+		$this->db->join('tr_kelas', 'td_kelas_ta.id_kelas = tr_kelas.id_kelas', 'left');
+		$this->db->join('tr_pelajaran', 'tr_kkm.id_pelajaran = tr_pelajaran.id_pelajaran', 'left');
 		$i = 0;
 	
 		foreach ($this->column_search as $item) // loop column 
@@ -77,7 +71,7 @@ class Mtd_kelas_ta extends CI_Model {
 		}
 	}
 
-	function getListKelasTa()
+	function getListkkm()
 	{
 		$this->_get_datatables_query();
 		if($_POST['length'] != -1)
@@ -99,33 +93,34 @@ class Mtd_kelas_ta extends CI_Model {
 		return $this->db->count_all_results();
 	}
 
-	public function getTdKelasTaById($id)
+	public function getTrKKMById($id)
 	{
 		$this->db->from($this->table);
-		$this->db->where('id_ta',$id);
+		$this->db->where('id_kkm',$id);
 		$query = $this->db->get();
 
 		return $query->row();
 	}
 
-	public function addTdKelasTa($data)
+	public function addtrKKM($data)
 	{
 		$this->db->insert($this->table, $data);
 		return $this->db->insert_id();
 	}
 
-	public function updateTdKelasTa($where, $data)
+	public function updatetrKKM($where, $data)
 	{
 		$this->db->update($this->table, $data, $where);
 		return $this->db->affected_rows();
 	}
 
-	public function deleteTdKelasTa($id)
+	public function deletetrKKM($id)
 	{
-		$this->db->where('id_ta', $id);
+		$this->db->where('id_kkm', $id);
 		$this->db->delete($this->table);
 	}	
+
 }
 
-/* End of file Mtd_kelas_ta.php */
-/* Location: ./application/models/Mtd_kelas_ta.php */
+/* End of file Mtr_kkm.php */
+/* Location: ./application/models/Mtr_kkm.php */
