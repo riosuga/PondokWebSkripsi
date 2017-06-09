@@ -74,6 +74,7 @@ function edit_person(id)
             $('[name="semester"]').val(data.semester);
             $('[name="nama"]').val(data.nama);
             $('[name="tahun"]').val(data.tahun);
+
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
             $('.modal-title').text('Edit Person'); // Set title to Bootstrap modal title
         },

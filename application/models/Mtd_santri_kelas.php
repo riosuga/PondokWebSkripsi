@@ -22,7 +22,7 @@ class Mtd_santri_kelas extends CI_Model {
 		return $this->id_ta;
 	}
 
-	public function getKelasTaOnTdSantriKelas(){
+	public function getKelasTaOnTdSantriKelas($id_ta){
 		/*
 		SELECT *,td_guru.nama as nama_guru FROM td_santri_kelas 
 		join td_kelas_ta on td_santri_kelas.id_ta = td_kelas_ta.id_ta 
@@ -36,6 +36,8 @@ class Mtd_santri_kelas extends CI_Model {
 		$this->db->join('td_kelas_ta', 'td_santri_kelas.id_ta = td_kelas_ta.id_ta', 'left');
 		$this->db->join('td_guru', 'td_kelas_ta.id_guru = td_guru.id_guru', 'left');
 		$this->db->join('tr_kelas', 'td_kelas_ta.id_kelas = tr_kelas.id_kelas', 'left');
+		$this->db->where('td_kelas_ta.id_ta', $id_ta);
+		$this->db->limit(1);
 		$query =  $this->db->get();
 		return $query->result_array();
 	}
@@ -143,11 +145,22 @@ class Mtd_santri_kelas extends CI_Model {
 
 	public function deleteTdSantriKelas($id)
 	{
-		$this->db->where('id_Kelas', $id);
+		$this->db->where('id_santri_kelas', $id);
 		$this->db->delete($this->table);
 	}	
-	
 
+	public function muridIsExists($id_santri, $id_ta){
+		$this->db->from($this->table);
+		$this->db->where('id_santri', $id_santri);
+		$this->db->where('id_ta', $id_ta);
+		$query =  $this->db->get();
+		if($query->num_rows() >= 1){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
 }
 
 /* End of file Mtd_santri_kelas.php */

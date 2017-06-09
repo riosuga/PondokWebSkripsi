@@ -14,6 +14,10 @@ class Td_santri_rapot extends CI_Controller {
 		$this->load->view('v_td_santri_rapot');
 	}
 
+	public function rapot(){
+		
+	}
+
 	public function tdSantriRapotList(){
 		$listSantriRapot = $this->santri_r->getListSantriRapot();
 		$data  = array();
@@ -35,6 +39,10 @@ class Td_santri_rapot extends CI_Controller {
 			"data" => $data,
 			);
 		echo json_encode($output);
+	}
+
+	public function getListSaranNilai($id_siswa){
+		$listPelajaran  = $this->santri_r->getListPelajaran();
 	}
 
 	public function addTdSantriRapot(){

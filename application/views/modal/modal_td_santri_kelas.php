@@ -67,7 +67,7 @@ function SelectSort(SelList)
                 <form action="#" id="form" class="form-horizontal"  name ="Example">
                     <input type="hidden" value="" name="id"/> 
                     <input type="hidden" name="id_ta" value="<?php echo $slug; ?>">
-                    <input type="text" name="id_santri_kelas" value="<?php foreach ($data_kelas as $kelas) {
+                    <input type="hidden" name="id_santri_kelas" value="<?php foreach ($data_kelas as $kelas) {
                         echo $kelas['id_santri_kelas'];
                     } ?>">
                     <div class="form-body">
@@ -79,20 +79,20 @@ function SelectSort(SelList)
                                   <?php foreach ($data_santri as $data) {
                                     echo '<option value="'.$data['id_santri'].'">'.$data['nis'].' - '.$data['nama'].'</option>';
                                   }?>
-                              </select>
-                          </td>
-                          <td align="center" valign="middle">
-                            <input id="to-right" name ="to-right" class="btn btn-primary btn-lg btn-block" type="Button" value="Add >>" style="width:100px" onClick="SelectMoveRows(document.Example.Features,document.Example.FeatureCodes)"><br>
-                            <br>
-                            <input id="to-left" name="to-left" class="btn btn-primary btn-lg btn-block" type="Button" value="<< Remove" style="width:100px" onClick="SelectMoveRows(document.Example.FeatureCodes,document.Example.Features)">
-                        </td>
-                        <td>
-                            <select id="FeatureCodes" name="FeatureCodes" class="form-control" size="9" MULTIPLE >
-                                <!-- onchange="getCombo(this)" -->
-                                <!-- <option value ="1">000117 - Roni</option> -->
-                            </select>
-                            <textarea type="text" id="myField" name="myField" class="form-control" readonly="true"></textarea>
-                        </td>
+                                  </select>
+                            </td> 
+                            <td align="center" valign="middle">
+                                    <input id="to-right" name ="to-right" class="btn btn-primary btn-sm btn-block" type="Button" value="Add >>" style="width:100%" onClick="SelectMoveRows(document.Example.Features,document.Example.FeatureCodes)"><br>
+                                    <br>
+                                    <input id="to-left" name="to-left" class="btn btn-primary btn-sm btn-block" type="Button" value="<< Remove" style="width:100%" onClick="SelectMoveRows(document.Example.FeatureCodes,document.Example.Features)">
+                            </td>    
+                            <td>
+                                <select id="FeatureCodes" name="FeatureCodes" class="form-control" size="9" MULTIPLE >
+                                    <!-- onchange="getCombo(this)" -->
+                                    <!-- <option value ="1">000117 - Roni</option> -->
+                                </select>
+                                <textarea type="hidden" id="myField" name="myField" class="form-control" readonly="true"></textarea>
+                            </td>
                     </tr>
                 </table>
             </div>
@@ -119,6 +119,6 @@ function SelectSort(SelList)
       }
 });
     $('#to-left').click(function(){
-    $('#myField').val('');
+    $('#myField').val("");
   });
 </script>

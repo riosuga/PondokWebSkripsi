@@ -3,7 +3,7 @@
         echo $kelas['nama_kelas'].'dengan tahun ajaran'.$kelas['tahun'].' dan semster '.$kelas['semester'].' dengan wali '.$kelas['nama_guru'];
       } ?></h3>
         <br />
-        <button class="btn btn-success" onclick="add_person()"><i class="glyphicon glyphicon-plus"></i> Tambah Kelas Tahun Ajaran</button>
+        <button class="btn btn-success" onclick="add_person()"><i class="glyphicon glyphicon-plus"></i> Tambah Siswa Kedalam Kelas</button>
         <button class="btn btn-default" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
         <br />
         <br />

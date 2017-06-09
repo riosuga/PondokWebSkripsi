@@ -23,7 +23,7 @@ class Td_santri_kelas extends CI_Controller {
 		$newData = array('id_ta'=> $id_ta);
 		$this->session->set_userdata($newData);
 
-		$data2['data_kelas'] = $this->santri_kelas->getKelasTaOnTdSantriKelas();
+		$data2['data_kelas'] = $this->santri_kelas->getKelasTaOnTdSantriKelas($id_ta);
 		$data2['data_santri'] = $this->santri_kelas->getSantriHasNotClass($id_ta);
 		$data2['slug'] = $id_ta;
 		$data = array(
@@ -75,11 +75,17 @@ class Td_santri_kelas extends CI_Controller {
 		$id = $this->input->post('id_ta');
 		$tampung = explode(',',$data);
 		foreach ($tampung as $masuk) {
-			$data = array(
-				'nis' =>  $masuk,
-				'id_kelas' => $id
-				);
-			$this->santri_kelas->addTdSantriKelas($data);
+			$isExist = $this->santri_kelas->muridIsExists($masuk,$id);
+			if($isExist == false){
+				continue;
+			}else{
+					$data = array(
+					'id_santri' =>  $masuk,
+					'id_ta' => $id
+					);
+				$this->santri_kelas->addTdSantriKelas($data);
+			}
+			
 		}
 		 echo json_encode(array("status" => TRUE));
 	}
